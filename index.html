@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lara Pegg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:       #111010;
+    --surface:  #1a1917;
+    --surface2: #222120;
+    --amber:    #d4874a;
+    --amber-dim:#8a5530;
+    --amber-glow:rgba(212,135,74,0.12);
+    --cream:    #f0e6d3;
+    --muted:    #7a706a;
+    --border:   rgba(212,135,74,0.18);
+    --text:     #e8ddd0;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    padding: 1.2rem 3.5rem;
+    display: flex; align-items:center; justify-content:space-between;
+    background: rgba(17,16,16,0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(212,135,74,0.1);
+  }
+  .nav-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size:1.2rem;
+    color: var(--cream);
+  }
+  .nav-links { display:flex; gap:2rem; align-items:center; }
+  .nav-links a {
+    text-decoration:none; font-size:0.76rem; font-weight:400;
+    color: var(--muted); transition: color 0.2s;
+    letter-spacing:0.04em;
+  }
+  .nav-links a:hover { color: var(--amber); }
+  .nav-pill {
+    text-decoration:none; font-size:0.74rem; font-weight:500;
+    padding: 0.5rem 1.3rem; border-radius:999px;
+    border: 1px solid var(--amber); color: var(--amber);
+    transition: all 0.25s;
+  }
+  .nav-pill:hover { background:var(--amber); color: var(--bg); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* left panel */
+  .hero-left {
+    display:flex; flex-direction:column; justify-content:center;
+    padding: 10rem 4rem 6rem 5rem;
+    position: relative; z-index:2;
+  }
+
+  .hero-pill {
+    display:inline-flex; align-items:center; gap:0.6rem;
+    padding: 0.4rem 1rem; border-radius:999px;
+    border: 1px solid var(--border);
+    font-size:0.7rem; font-weight:400; letter-spacing:0.08em;
+    color: var(--amber); margin-bottom:2.5rem; width:fit-content;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .pulse {
+    width:7px; height:7px; border-radius:50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 0 rgba(212,135,74,0.6);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0   rgba(212,135,74,0.6); }
+    70%  { box-shadow: 0 0 0 8px rgba(212,135,74,0); }
+    100% { box-shadow: 0 0 0 0   rgba(212,135,74,0); }
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.8rem, 6vw, 6.5rem);
+    font-weight: 400; line-height:1.0;
+    color: var(--cream);
+    animation: fadeUp 0.8s 0.2s ease both;
+    margin-bottom: 0.4rem;
+  }
+  .hero-name em { font-style:italic; color: var(--amber); }
+
+  .hero-title {
+    font-size: 0.9rem; font-weight:300;
+    color: var(--muted); letter-spacing:0.05em;
+    margin-bottom:2.5rem;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-desc {
+    font-size:1rem; line-height:1.8;
+    color: rgba(232,221,208,0.65);
+    max-width: 400px; margin-bottom:3rem;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .hero-cta {
+    display:inline-flex; align-items:center; gap:0.8rem;
+    text-decoration:none; font-size:0.8rem; font-weight:500;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color: var(--cream); width:fit-content;
+    padding-bottom:0.4rem;
+    border-bottom: 1px solid var(--amber);
+    transition: color 0.2s, gap 0.2s;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+  .hero-cta:hover { color: var(--amber); gap:1.4rem; }
+
+  /* right panel */
+  .hero-right {
+    position:relative; background: var(--surface);
+    overflow:hidden;
+  }
+  .hero-right::before {
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse at 40% 30%, rgba(212,135,74,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 85%, rgba(212,135,74,0.07) 0%, transparent 45%);
+  }
+
+  /* diagonal grid lines */
+  .hero-grid {
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 38px,
+        rgba(212,135,74,0.05) 38px,
+        rgba(212,135,74,0.05) 39px
+      );
+  }
+
+  /* hero photo */
+  .hero-img {
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover; object-position:center top;
+    opacity:0.85;
+    mix-blend-mode:luminosity;
+    filter:contrast(1.05);
+  }
+
+  /* stat grid */
+  .hero-stats {
+    position:absolute; bottom:3.5rem; left:3rem; right:3rem;
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:1px; background:rgba(212,135,74,0.15);
+    border:1px solid rgba(212,135,74,0.15);
+    z-index:2;
+    animation: fadeIn 1s 0.6s ease both;
+  }
+  .hero-stat {
+    background: rgba(17,16,16,0.9);
+    padding:1.5rem 1.8rem;
+    transition: background 0.2s;
+  }
+  .hero-stat:hover { background: rgba(30,28,27,0.95); }
+  .hero-stat-n {
+    font-family:'Playfair Display', serif;
+    font-size:2.2rem; font-weight:400;
+    color: var(--amber); line-height:1;
+    margin-bottom:0.35rem;
+  }
+  .hero-stat-l {
+    font-size:0.62rem; font-weight:500;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color: rgba(232,221,208,0.35);
+  }
+
+  /* spinning badge */
+  .hero-badge {
+    position:absolute; top:3rem; right:3rem; z-index:3;
+    width:110px; height:110px;
+  }
+  .badge-ring {
+    width:100%; height:100%;
+    border-radius:50%;
+    border:1px solid rgba(212,135,74,0.4);
+    display:flex; align-items:center; justify-content:center;
+    animation: spin 18s linear infinite;
+  }
+  .badge-text {
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    font-size:0.58rem; font-weight:600;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--amber); text-align:center; line-height:1.5;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* ── SHARED ── */
+  .wrap { max-width:1100px; margin:0 auto; padding:0 3.5rem; }
+
+  .label {
+    font-size:0.65rem; font-weight:500;
+    letter-spacing:0.2em; text-transform:uppercase;
+    color: var(--amber); display:flex; align-items:center; gap:0.8rem;
+    margin-bottom:1.5rem;
+  }
+  .label::after { content:''; flex:0 0 28px; height:1px; background:var(--amber-dim); }
+
+  /* ── MISSION ── */
+  .mission {
+    padding: 5.5rem 0;
+    background: var(--surface);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    position:relative; overflow:hidden;
+  }
+  .mission::before {
+    content:'';
+    position:absolute; top:-100px; right:-100px;
+    width:400px; height:400px;
+    background:radial-gradient(circle, rgba(212,135,74,0.08) 0%, transparent 65%);
+    border-radius:50%; pointer-events:none;
+  }
+  .mission-inner {
+    max-width:820px;
+    position:relative;
+  }
+  .mission-mark {
+    position:absolute; top:-2.5rem; left:-1rem;
+    font-family:'Playfair Display', serif;
+    font-size:12rem; line-height:1;
+    color:rgba(212,135,74,0.1);
+    pointer-events:none; user-select:none;
+  }
+  .mission-quote {
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:clamp(1.5rem, 3vw, 2.4rem);
+    font-weight:400; line-height:1.4;
+    color: var(--cream);
+    padding-left:0.5rem;
+  }
+  .mission-by {
+    margin-top:1.8rem; padding-left:0.5rem;
+    font-size:0.7rem; font-weight:500;
+    letter-spacing:0.16em; text-transform:uppercase;
+    color: var(--amber-dim);
+  }
+
+  /* ── ABOUT ── */
+  .about { padding:7rem 0; position:relative; overflow:hidden; }
+  .about-grid { display:grid; grid-template-columns:1fr 1.3fr; gap:6rem; align-items:start; }
+
+  .about-left {}
+  .about-heading {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(2rem,3.5vw,3rem); font-weight:400;
+    color: var(--cream); line-height:1.15; margin-bottom:2rem;
+  }
+  .about-heading em { font-style:italic; color:var(--amber); }
+
+  .about-tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:2.5rem; }
+  .tag {
+    font-size:0.68rem; font-weight:400; padding:0.35rem 0.85rem;
+    border-radius:999px; border:1px solid rgba(212,135,74,0.25);
+    color:rgba(232,221,208,0.6);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .tag:hover { border-color:var(--amber); color:var(--amber); }
+
+  .about-details { display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); }
+  .about-row {
+    background:var(--surface); padding:1.2rem 1.5rem;
+    display:flex; justify-content:space-between; align-items:center;
+    transition:background 0.2s;
+  }
+  .about-row:hover { background:var(--surface2); }
+  .about-row-k { font-size:0.65rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+  .about-row-v { font-size:0.88rem; color:var(--cream); }
+
+  .about-right p { font-size:0.98rem; line-height:1.85; color:rgba(232,221,208,0.6); margin-bottom:1.4rem; }
+
+  /* decorative circle */
+  .about-circle {
+    position:absolute; right:-120px; top:50%;
+    transform:translateY(-50%);
+    width:500px; height:500px;
+    border:1px solid rgba(212,135,74,0.07);
+    border-radius:50%; pointer-events:none;
+  }
+  .about-circle::after {
+    content:''; position:absolute; inset:50px;
+    border:1px solid rgba(212,135,74,0.04);
+    border-radius:50%;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience {
+    padding:7rem 0;
+    background:var(--surface);
+    border-top:1px solid var(--border);
+  }
+  .exp-list { margin-top:3rem; }
+  .exp-item {
+    display:grid; grid-template-columns:160px 1fr;
+    border-top:1px solid rgba(212,135,74,0.1);
+    padding:2.5rem 0;
+    transition:background 0.2s;
+    position:relative;
+  }
+  .exp-item:last-child { border-bottom:1px solid rgba(212,135,74,0.1); }
+  .exp-item::before {
+    content:'';
+    position:absolute; left:-1.5rem; top:2.8rem;
+    width:5px; height:5px; border-radius:50%;
+    background:var(--amber-dim);
+    transition:background 0.2s;
+  }
+  .exp-item:hover::before { background:var(--amber); }
+
+  .exp-date { font-size:0.7rem; color:var(--amber-dim); padding-top:0.3rem; line-height:1.5; }
+  .exp-role {
+    font-family:'Playfair Display', serif;
+    font-size:1.4rem; font-weight:400;
+    color:var(--cream); margin-bottom:0.3rem; line-height:1.2;
+  }
+  .exp-org { font-size:0.8rem; font-weight:500; color:var(--amber); margin-bottom:0.8rem; }
+  .exp-desc { font-size:0.88rem; line-height:1.75; color:rgba(232,221,208,0.5); max-width:520px; }
+
+  /* ── SKILLS ── */
+  .skills { padding:7rem 0; }
+  .skills-grid {
+    margin-top:3rem;
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1px; background:var(--border); border:1px solid var(--border);
+  }
+  .skill-card {
+    background:var(--bg); padding:2.5rem 2rem;
+    transition:background 0.25s;
+    position:relative; overflow:hidden;
+  }
+  .skill-card::before {
+    content:'';
+    position:absolute; top:-60px; right:-60px;
+    width:160px; height:160px;
+    background:radial-gradient(circle, var(--amber-glow) 0%, transparent 70%);
+    border-radius:50%; opacity:0;
+    transition:opacity 0.3s;
+  }
+  .skill-card:hover { background:var(--surface2); }
+  .skill-card:hover::before { opacity:1; }
+  .skill-card:nth-child(4) { grid-column:span 2; }
+
+  .skill-num { font-size:0.6rem; font-weight:500; letter-spacing:0.18em; color:var(--amber-dim); margin-bottom:1rem; }
+  .skill-name {
+    font-family:'Playfair Display', serif;
+    font-size:1.25rem; font-weight:400;
+    color:var(--cream); margin-bottom:0.7rem;
+  }
+  .skill-desc { font-size:0.82rem; line-height:1.7; color:rgba(232,221,208,0.45); }
+
+  /* ── EDUCATION ── */
+  .education { padding:7rem 0; background:var(--surface); border-top:1px solid var(--border); }
+  .edu-cards { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); margin-top:3rem; }
+  .edu-card {
+    background:var(--bg); padding:3rem;
+    transition:background 0.2s; position:relative; overflow:hidden;
+  }
+  .edu-card:hover { background:var(--surface2); }
+  .edu-card::after {
+    content:attr(data-letter);
+    position:absolute; bottom:-1rem; right:1rem;
+    font-family:'Playfair Display', serif;
+    font-style:italic; font-size:8rem; font-weight:700;
+    color:rgba(212,135,74,0.05); line-height:1;
+    pointer-events:none; user-select:none;
+  }
+  .edu-year { font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--amber); margin-bottom:1rem; }
+  .edu-school { font-family:'Playfair Display', serif; font-size:1.4rem; font-weight:400; color:var(--cream); margin-bottom:0.4rem; line-height:1.2; }
+  .edu-qual { font-size:0.82rem; line-height:1.55; color:rgba(232,221,208,0.45); margin-bottom:1.5rem; }
+  .edu-badge {
+    display:inline-block; font-size:0.62rem; font-weight:500;
+    padding:0.3rem 0.9rem; border-radius:999px;
+    background:rgba(212,135,74,0.1); color:var(--amber);
+    border:1px solid rgba(212,135,74,0.25);
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    padding:8rem 0;
+    background:var(--surface2);
+    border-top:1px solid var(--border);
+    text-align:center; position:relative; overflow:hidden;
+  }
+  .contact::before {
+    content:'';
+    position:absolute; top:-200px; left:50%; transform:translateX(-50%);
+    width:700px; height:700px;
+    background:radial-gradient(circle, rgba(212,135,74,0.08) 0%, transparent 60%);
+    border-radius:50%; pointer-events:none;
+  }
+  .contact .label { justify-content:center; }
+  .contact .label::after { display:none; }
+  .contact .label::before { content:''; flex:0 0 28px; height:1px; background:var(--amber-dim); }
+  .contact-title {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(2.5rem,5vw,4.5rem); font-weight:400;
+    color:var(--cream); line-height:1.1; margin-bottom:1.2rem;
+  }
+  .contact-title em { font-style:italic; color:var(--amber); }
+  .contact-sub { font-size:0.95rem; color:var(--muted); max-width:380px; margin:0 auto 3.5rem; line-height:1.75; }
+  .contact-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn-a {
+    display:inline-flex; align-items:center; gap:0.6rem;
+    text-decoration:none; font-size:0.78rem; font-weight:500;
+    padding:0.9rem 2rem; border-radius:999px;
+    background:var(--amber); color:var(--bg);
+    transition:background 0.25s, transform 0.2s;
+  }
+  .btn-a:hover { background:#e09a5a; transform:translateY(-2px); }
+  .btn-b {
+    display:inline-flex; align-items:center; gap:0.6rem;
+    text-decoration:none; font-size:0.78rem; font-weight:400;
+    padding:0.9rem 2rem; border-radius:999px;
+    border:1px solid rgba(212,135,74,0.35); color:rgba(232,221,208,0.7);
+    transition:all 0.25s;
+  }
+  .btn-b:hover { background:rgba(212,135,74,0.08); color:var(--cream); border-color:var(--amber); }
+
+  footer {
+    background:rgba(0,0,0,0.6); padding:1.5rem 3.5rem;
+    display:flex; justify-content:space-between; align-items:center;
+    border-top:1px solid rgba(212,135,74,0.08);
+  }
+  footer p { font-size:0.68rem; color:rgba(255,255,255,0.2); }
+  .footer-gem { color:var(--amber-dim); font-size:0.8rem; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+  .reveal { opacity:0; transform:translateY(22px); transition:opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.in { opacity:1; transform:translateY(0); }
+  .d1 { transition-delay:0.08s; }
+  .d2 { transition-delay:0.16s; }
+
+  @media(max-width:900px){
+    nav { padding:1rem 1.5rem; }
+    .nav-links a { display:none; }
+    .hero { grid-template-columns:1fr; min-height:auto; }
+    .hero-left { padding:8rem 2rem 4rem; }
+    .hero-right { min-height:50vh; }
+    .wrap { padding:0 1.5rem; }
+    .about-grid { grid-template-columns:1fr; gap:3rem; }
+    .exp-item { grid-template-columns:1fr; }
+    .exp-date { margin-bottom:0.4rem; }
+    .skills-grid { grid-template-columns:1fr; }
+    .skill-card:nth-child(4) { grid-column:span 1; }
+    .edu-cards { grid-template-columns:1fr; }
+    .contact { padding:5rem 0; }
+    footer { flex-direction:column; gap:0.5rem; text-align:center; padding:1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">Lara Pegg</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a class="nav-pill" href="#contact">Say hello</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-pill">
+      <div class="pulse"></div>
+      Wolverhampton, UK · Open to opportunities
+    </div>
+    <h1 class="hero-name">
+      People<br/>come <em>first.</em>
+    </h1>
+    <p class="hero-title">Head of HR &amp; Governance · Wolves Foundation</p>
+    <p class="hero-desc">
+      9+ years making workplaces genuinely better — through sharp policy, real empathy, and a deep belief that how you treat people is everything.
+    </p>
+    <a class="hero-cta" href="#contact">
+      Get in touch
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-grid"></div>
+    <img src="larahero.jpg" alt="Lara Pegg" class="hero-img"/>
+
+    <div class="hero-badge">
+      <div class="badge-ring">
+        <svg viewBox="0 0 110 110" width="110" height="110" style="position:absolute;inset:0;">
+          <path id="circle-text" d="M 55,55 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" fill="none"/>
+          <text font-size="9.5" fill="rgba(212,135,74,0.7)" font-family="DM Sans, sans-serif" letter-spacing="3" font-weight="500">
+            <textPath href="#circle-text">CIPD LEVEL 5 · ASSOC CIPD · HR &amp; GOV ·</textPath>
+          </text>
+        </svg>
+      </div>
+      <div class="badge-text">Assoc<br/>CIPD</div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-n">9+</div>
+        <div class="hero-stat-l">Years in HR</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n">L5</div>
+        <div class="hero-stat-l">CIPD Diploma</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n">WFC</div>
+        <div class="hero-stat-l">Wolves Foundation</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n">ER+</div>
+        <div class="hero-stat-l">Full Casework Range</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="wrap">
+    <div class="mission-inner reveal">
+      <div class="mission-mark">"</div>
+      <blockquote class="mission-quote">
+        A positive, safe and inclusive environment to allow women to share stories and experiences.
+      </blockquote>
+      <div class="mission-by">— Lara's mission</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-circle"></div>
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <div class="label">About</div>
+        <h2 class="about-heading">HR with<br/><em>heart.</em></h2>
+        <div class="about-tags">
+          <span class="tag">Employee Relations</span>
+          <span class="tag">Governance</span>
+          <span class="tag">Policy</span>
+          <span class="tag">TUPE</span>
+          <span class="tag">Safer Recruitment</span>
+          <span class="tag">People Strategy</span>
+          <span class="tag">Public Speaking</span>
+        </div>
+        <div class="about-details">
+          <div class="about-row">
+            <span class="about-row-k">Role</span>
+            <span class="about-row-v">Head of HR &amp; Governance</span>
+          </div>
+          <div class="about-row">
+            <span class="about-row-k">Organisation</span>
+            <span class="about-row-v">Wolves Foundation</span>
+          </div>
+          <div class="about-row">
+            <span class="about-row-k">Location</span>
+            <span class="about-row-v">Wolverhampton, England</span>
+          </div>
+          <div class="about-row">
+            <span class="about-row-k">Membership</span>
+            <span class="about-row-v">Associate CIPD</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-right reveal d1">
+        <p>With a Level 5 CIPD diploma and a career spanning education, leisure, and community sport, Lara brings breadth and warmth to everything she does. From frontline advisory to board-level trustee governance, she's equally at home in a difficult casework conversation and a leadership meeting.</p>
+        <p>At Wolves Foundation she leads a people and governance function covering safer recruitment, policy development, ER management and everything in between — all with the same care she'd want for herself.</p>
+        <p>Skilled in Customer Service, Public Speaking, Administration, Human Resources, and Teamwork. Strong relationship management, communication, and critical thinking — with real line management experience to back it up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="wrap">
+    <div class="label reveal">Experience</div>
+    <div class="exp-list">
+      <div class="exp-item reveal">
+        <div class="exp-date">Jan 2025<br/>Present</div>
+        <div>
+          <div class="exp-role">Head of HR &amp; Governance</div>
+          <div class="exp-org">Wolves Foundation</div>
+          <p class="exp-desc">Leading HR and Governance across the Foundation — Safer Recruitment, SCR, policy, ER management, and Trustee governance. A strategic senior role where people and compliance meet.</p>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-date">Nov 2022<br/>Jan 2025</div>
+        <div>
+          <div class="exp-role">HR Manager</div>
+          <div class="exp-org">Wolves Foundation</div>
+          <p class="exp-desc">Standalone HR Manager and member of the Senior Management team, responsible for the full people and governance strategy across the charity.</p>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-date">Apr 2020<br/>Nov 2022</div>
+        <div>
+          <div class="exp-role">HR Consultant</div>
+          <div class="exp-org">Services4Schools</div>
+          <p class="exp-desc">Full-time consultancy supporting schools across the West Midlands — disciplinary, grievance, capability, restructure, redundancy, and TUPE.</p>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-date">Jul 2019<br/>Apr 2020</div>
+        <div>
+          <div class="exp-role">HR Advisor</div>
+          <div class="exp-org">Services4Schools</div>
+          <p class="exp-desc">Frontline advisory for a portfolio of schools — absence management, policy development, and union consultation including JCNC work.</p>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-date">Aug 2017<br/>Jul 2019</div>
+        <div>
+          <div class="exp-role">HR Apprentice → Administrator</div>
+          <div class="exp-org">Services4Schools</div>
+          <p class="exp-desc">Started as an apprentice and grew into a full HR Administrator — building a solid foundation in personnel management and HR operations.</p>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-date">May 2013<br/>Oct 2016</div>
+        <div>
+          <div class="exp-role">Receptionist (various roles)</div>
+          <div class="exp-org">Bert Williams Leisure Centre</div>
+          <p class="exp-desc">Progressed from Casual Recreation Assistant to full-time Receptionist. Built the communication and warmth that underpins her people-first approach.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="label reveal">Core Skills</div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-num">01</div>
+        <div class="skill-name">Employee Relations</div>
+        <p class="skill-desc">Deep experience across disciplinaries, grievances, capability, redundancy, TUPE, and union consultation — including JCNC work.</p>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-num">02</div>
+        <div class="skill-name">Governance &amp; Compliance</div>
+        <p class="skill-desc">Trustee governance, SCR management, safer recruitment, data governance, and board-level policy development.</p>
+      </div>
+      <div class="skill-card reveal d2">
+        <div class="skill-num">03</div>
+        <div class="skill-name">Policy Development</div>
+        <p class="skill-desc">Writing and implementing policies that people actually use — balancing legal requirements with culture and common sense.</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-num">04</div>
+        <div class="skill-name">Communication &amp; Relationships</div>
+        <p class="skill-desc">Strong public speaker. Adept at difficult conversations, senior stakeholder engagement, union consultation, and building genuine trust quickly with teams, leadership, and trustees alike.</p>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-num">05</div>
+        <div class="skill-name">People Strategy</div>
+        <p class="skill-desc">Developing people strategies that stick — from standalone HR function leadership to full senior management team involvement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education" id="education">
+  <div class="wrap">
+    <div class="label reveal">Education</div>
+    <div class="edu-cards">
+      <div class="edu-card reveal" data-letter="C">
+        <div class="edu-year">2018 – 2019</div>
+        <div class="edu-school">CIPD Qualifications</div>
+        <div class="edu-qual">Level 5 Diploma in Human Resources Management &amp; Services</div>
+        <span class="edu-badge">Achieved</span>
+      </div>
+      <div class="edu-card reveal d1" data-letter="T">
+        <div class="edu-year">2019 – 2020</div>
+        <div class="edu-school">Training Qualifications UK</div>
+        <div class="edu-qual">HR Consultant / Partner Standard — Human Resources Development</div>
+        <span class="edu-badge">Pass</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="label">Get in touch</div>
+    <h2 class="contact-title">Let's talk<br/><em>people.</em></h2>
+    <p class="contact-sub">Whether it's a chat about HR, governance, or a potential opportunity — Lara would love to hear from you.</p>
+    <div class="contact-btns">
+      <a class="btn-a" href="https://www.linkedin.com/in/lara-pegg-assoc-cipd" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56V14.9c0-1.33-.48-2.24-1.67-2.24-.91 0-1.45.61-1.69 1.2-.09.21-.11.5-.11.8v5.79H9.86s.05-9.39 0-10.36h3.56v1.47c.47-.73 1.31-1.77 3.19-1.77 2.33 0 4.07 1.52 4.07 4.79v5.87zM5.34 8.29c-1.21 0-2-.81-2-1.83 0-1.04.81-1.83 2.04-1.83s1.98.79 2 1.83c0 1.02-.79 1.83-2.04 1.83zm1.78 12.16H3.56V9.58h3.56v10.87z"/></svg>
+        LinkedIn
+      </a>
+      <a class="btn-b" href="mailto:lara@example.com">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Send an email
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Lara Pegg</p>
+  <span class="footer-gem">◆</span>
+  <p>Wolverhampton, England</p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
