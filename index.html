@@ -164,10 +164,18 @@
     position:absolute; inset:0;
     width:100%; height:100%;
     object-fit:cover; object-position:center top;
-    opacity:0.85;
-    mix-blend-mode:luminosity;
-    filter:contrast(1.05);
+    z-index:1;
   }
+  .hero-right::after {
+    content:'';
+    position:absolute; inset:0; z-index:2;
+    background:
+      linear-gradient(to top, rgba(17,16,16,0.92) 0%, rgba(17,16,16,0.25) 55%, rgba(17,16,16,0.1) 100%),
+      linear-gradient(to right, rgba(17,16,16,0.35) 0%, transparent 40%);
+    pointer-events:none;
+  }
+  .hero-badge { z-index:4; }
+  .hero-stats { z-index:4; }
 
   /* stat grid */
   .hero-stats {
@@ -461,7 +469,8 @@
   @keyframes fadeUp { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:translateY(0); } }
   @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-  .reveal { opacity:0; transform:translateY(22px); transition:opacity 0.65s ease, transform 0.65s ease; }
+  .reveal { opacity:1; transform:translateY(0); transition:opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.will-animate { opacity:0; transform:translateY(22px); }
   .reveal.in { opacity:1; transform:translateY(0); }
   .d1 { transition-delay:0.08s; }
   .d2 { transition-delay:0.16s; }
@@ -751,6 +760,16 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobser
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    reveals.forEach(el => el.classList.add('will-animate'));
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.05 });
+    reveals.forEach(el => obs.observe(el));
+  }
+</script>
+</body>
+</html>
