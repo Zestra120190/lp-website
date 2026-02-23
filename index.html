@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lara Pegg</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23111010'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='28' font-weight='700' fill='%23d4874a'>LP</text></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -391,7 +392,7 @@
 
   /* ── EDUCATION ── */
   .education { padding:7rem 0; background:var(--surface); border-top:1px solid var(--border); }
-  .edu-cards { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); margin-top:3rem; }
+  .edu-cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin-top:3rem; }
   .edu-card {
     background:var(--bg); padding:3rem;
     transition:background 0.2s; position:relative; overflow:hidden;
@@ -729,6 +730,30 @@
         <div class="edu-school">Training Qualifications UK</div>
         <div class="edu-qual">HR Consultant / Partner Standard — Human Resources Development</div>
         <span class="edu-badge">Pass</span>
+      </div>
+      <div class="edu-card reveal" data-letter="N">
+        <div class="edu-year">2024</div>
+        <div class="edu-school">NSPCC</div>
+        <div class="edu-qual">Safer Recruitment</div>
+        <span class="edu-badge">Certified</span>
+      </div>
+      <div class="edu-card reveal d1" data-letter="M">
+        <div class="edu-year">CPD</div>
+        <div class="edu-school">Mental Health First Aid</div>
+        <div class="edu-qual">Mental Health First Aider qualification</div>
+        <span class="edu-badge">Certified</span>
+      </div>
+      <div class="edu-card reveal" data-letter="A">
+        <div class="edu-year">CPD</div>
+        <div class="edu-school">Autism in the Workplace</div>
+        <div class="edu-qual">Continuing Professional Development</div>
+        <span class="edu-badge">Certified</span>
+      </div>
+      <div class="edu-card reveal d1" data-letter="S">
+        <div class="edu-year">In Progress</div>
+        <div class="edu-school">Level 3 Safeguarding</div>
+        <div class="edu-qual">Safeguarding Apprenticeship — currently completing</div>
+        <span class="edu-badge" style="background:rgba(122,140,118,0.15);color:#7a8c76;border-color:rgba(122,140,118,0.3);">In Progress</span>
       </div>
     </div>
   </div>
