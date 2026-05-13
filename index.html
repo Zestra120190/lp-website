@@ -389,6 +389,27 @@
   .skill-card:hover::before { opacity:1; }
 
 
+  .skills-layout { margin-top:3rem; border:1px solid var(--border); }
+
+  .skills-top {
+    display:grid; grid-template-columns:1fr 2fr;
+    gap:1px; background:var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .skills-top-cards {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:1px; background:var(--border);
+  }
+  .skills-photo-panel {
+    display:block; width:100%; height:100%;
+    min-height:380px;
+    object-fit:cover; object-position:center top;
+  }
+  .skills-bottom {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:1px; background:var(--border);
+  }
+
   .skill-num { font-size:0.6rem; font-weight:500; letter-spacing:0.18em; color:var(--amber-dim); margin-bottom:1rem; }
   .skill-name {
     font-family:'Playfair Display', serif;
@@ -495,7 +516,10 @@
     .about-grid { grid-template-columns:1fr; gap:3rem; }
     .exp-item { grid-template-columns:1fr; }
     .exp-date { margin-bottom:0.4rem; }
-    .skills-grid { grid-template-columns:1fr; }
+    .skills-top { grid-template-columns:1fr; }
+    .skills-top-cards { grid-template-columns:1fr; }
+    .skills-photo-panel { min-height:260px; height:260px; }
+    .skills-bottom { grid-template-columns:1fr; }
     .edu-cards { grid-template-columns:1fr; }
     .contact { padding:5rem 0; }
     footer { flex-direction:column; gap:0.5rem; text-align:center; padding:1.5rem; }
@@ -701,36 +725,43 @@
 <section class="skills" id="skills">
   <div class="wrap">
     <div class="label reveal">Core Skills</div>
-    <div class="skills-grid">
-      <div class="skill-card reveal">
-        <div class="skill-num">01</div>
-        <div class="skill-name">Employee Relations</div>
-        <p class="skill-desc">Deep experience across disciplinaries, grievances, capability, redundancy, TUPE, and union consultation — including JCNC work.</p>
+    <div class="skills-layout">
+      <div class="skills-top">
+        <img src="LARAPOINT2.jpg" alt="Lara Pegg" class="skills-photo-panel reveal"/>
+        <div class="skills-top-cards">
+          <div class="skill-card reveal">
+            <div class="skill-num">01</div>
+            <div class="skill-name">Employee Relations</div>
+            <p class="skill-desc">Deep experience across disciplinaries, grievances, capability, redundancy, TUPE, and union consultation — including JCNC work.</p>
+          </div>
+          <div class="skill-card reveal d1">
+            <div class="skill-num">02</div>
+            <div class="skill-name">Governance &amp; Compliance</div>
+            <p class="skill-desc">Trustee governance, SCR management, safer recruitment, data governance, and board-level policy development.</p>
+          </div>
+          <div class="skill-card reveal">
+            <div class="skill-num">03</div>
+            <div class="skill-name">Policy Development</div>
+            <p class="skill-desc">Writing and implementing policies that people actually use — balancing legal requirements with culture and common sense.</p>
+          </div>
+          <div class="skill-card reveal d1">
+            <div class="skill-num">04</div>
+            <div class="skill-name">Communication &amp; Relationships</div>
+            <p class="skill-desc">Strong public speaker. Adept at difficult conversations, senior stakeholder engagement, union consultation, and building genuine trust quickly with teams, leadership, and trustees alike.</p>
+          </div>
+        </div>
       </div>
-      <div class="skill-card reveal d1">
-        <div class="skill-num">02</div>
-        <div class="skill-name">Governance &amp; Compliance</div>
-        <p class="skill-desc">Trustee governance, SCR management, safer recruitment, data governance, and board-level policy development.</p>
-      </div>
-      <div class="skill-card reveal d2">
-        <div class="skill-num">03</div>
-        <div class="skill-name">Policy Development</div>
-        <p class="skill-desc">Writing and implementing policies that people actually use — balancing legal requirements with culture and common sense.</p>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-num">04</div>
-        <div class="skill-name">Communication &amp; Relationships</div>
-        <p class="skill-desc">Strong public speaker. Adept at difficult conversations, senior stakeholder engagement, union consultation, and building genuine trust quickly with teams, leadership, and trustees alike.</p>
-      </div>
-      <div class="skill-card reveal d1">
-        <div class="skill-num">05</div>
-        <div class="skill-name">People Strategy</div>
-        <p class="skill-desc">Developing people strategies that stick — from standalone HR function leadership to full senior management team involvement.</p>
-      </div>
-      <div class="skill-card reveal d2">
-        <div class="skill-num">06</div>
-        <div class="skill-name">Culture &amp; Wellbeing</div>
-        <p class="skill-desc">Architect of workplace wellbeing strategy from the ground up — embedding reward, benefit, and culture initiatives that make organisations genuinely better places to work.</p>
+      <div class="skills-bottom">
+        <div class="skill-card reveal">
+          <div class="skill-num">05</div>
+          <div class="skill-name">People Strategy</div>
+          <p class="skill-desc">Developing people strategies that stick — from standalone HR function leadership to full senior management team involvement.</p>
+        </div>
+        <div class="skill-card reveal d1">
+          <div class="skill-num">06</div>
+          <div class="skill-name">Culture &amp; Wellbeing</div>
+          <p class="skill-desc">Architect of workplace wellbeing strategy from the ground up — embedding reward, benefit, and culture initiatives that make organisations genuinely better places to work.</p>
+        </div>
       </div>
     </div>
   </div>
