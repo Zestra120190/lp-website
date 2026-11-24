@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#111010"/>
 <title>Lara Pegg</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='28' font-weight='700' fill='%23d4874a'>LP</text></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -14,16 +15,28 @@
     --surface:  #1a1917;
     --surface2: #222120;
     --amber:    #d4874a;
-    --amber-dim:#8a5530;
+    --amber-dim:#b8794a;
     --amber-glow:rgba(212,135,74,0.12);
     --cream:    #f0e6d3;
-    --muted:    #7a706a;
+    --muted:    #9a908a;
     --border:   rgba(212,135,74,0.18);
     --text:     #e8ddd0;
+    --text-dim: rgba(232,221,208,0.62);
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
+  html { scroll-behavior:smooth; color-scheme:dark; }
+  a, button { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+  section[id] { scroll-margin-top:5rem; }
+  ::selection { background:var(--amber); color:var(--bg); }
+  :focus-visible { outline:2px solid var(--amber); outline-offset:3px; border-radius:2px; }
+  .skip-link {
+    position:absolute; left:1rem; top:-3rem; z-index:200;
+    background:var(--amber); color:var(--bg); padding:0.6rem 1rem;
+    font-size:0.8rem; font-weight:500; text-decoration:none; border-radius:4px;
+    transition:top 0.2s;
+  }
+  .skip-link:focus { top:1rem; }
 
   body {
     background: var(--bg);
@@ -49,11 +62,11 @@
   }
   .nav-digest {
     display:inline-flex; align-items:center; gap:0.5rem;
-    text-decoration:none; font-size:0.72rem; font-weight:500;
+    text-decoration:none; font-size:0.75rem; font-weight:500;
     letter-spacing:0.04em; color:rgba(232,221,208,0.72);
     padding:0.45rem 1rem; border-radius:999px;
     border:1px solid rgba(212,135,74,0.28);
-    transition: all 0.25s;
+    transition: color 0.25s, border-color 0.25s, background-color 0.25s;
   }
   .nav-digest svg { flex:0 0 auto; }
   .nav-digest:hover { color:var(--cream); border-color:var(--amber); background:rgba(212,135,74,0.08); }
@@ -68,7 +81,7 @@
     text-decoration:none; font-size:0.74rem; font-weight:500;
     padding: 0.5rem 1.3rem; border-radius:999px;
     border: 1px solid var(--amber); color: var(--amber);
-    transition: all 0.25s;
+    transition: color 0.25s, background-color 0.25s;
   }
   .nav-pill:hover { background:var(--amber); color: var(--bg); }
 
@@ -92,20 +105,23 @@
     display:inline-flex; align-items:center; gap:0.6rem;
     padding: 0.4rem 1rem; border-radius:999px;
     border: 1px solid var(--border);
-    font-size:0.7rem; font-weight:400; letter-spacing:0.08em;
+    font-size:0.72rem; font-weight:400; letter-spacing:0.05em;
     color: var(--amber); margin-bottom:2.5rem; width:fit-content;
     animation: fadeUp 0.7s 0.1s ease both;
   }
   .pulse {
     width:7px; height:7px; border-radius:50%;
+    background: var(--amber); position:relative;
+  }
+  .pulse::after {
+    content:''; position:absolute; inset:0; border-radius:50%;
     background: var(--amber);
-    box-shadow: 0 0 0 0 rgba(212,135,74,0.6);
-    animation: pulse 2s infinite;
+    animation: pulse 2s ease-out infinite;
   }
   @keyframes pulse {
-    0%   { box-shadow: 0 0 0 0   rgba(212,135,74,0.6); }
-    70%  { box-shadow: 0 0 0 8px rgba(212,135,74,0); }
-    100% { box-shadow: 0 0 0 0   rgba(212,135,74,0); }
+    0%   { transform:scale(1);   opacity:0.6; }
+    70%  { transform:scale(3.3); opacity:0; }
+    100% { transform:scale(3.3); opacity:0; }
   }
 
   .hero-name {
@@ -139,10 +155,12 @@
     color: var(--cream); width:fit-content;
     padding-bottom:0.4rem;
     border-bottom: 1px solid var(--amber);
-    transition: color 0.2s, gap 0.2s;
+    transition: color 0.2s;
     animation: fadeUp 0.8s 0.5s ease both;
   }
-  .hero-cta:hover { color: var(--amber); gap:1.4rem; }
+  .hero-cta svg { transition: transform 0.2s; }
+  .hero-cta:hover { color: var(--amber); }
+  .hero-cta:hover svg { transform: translateX(0.4rem); }
 
   /* right panel */
   .hero-right {
@@ -200,9 +218,7 @@
   .hero-stat {
     background: rgba(17,16,16,0.9);
     padding:1.5rem 1.8rem;
-    transition: background 0.2s;
   }
-  .hero-stat:hover { background: rgba(30,28,27,0.95); }
   .hero-stat-n {
     font-family:'Playfair Display', serif;
     font-size:2.2rem; font-weight:400;
@@ -210,9 +226,9 @@
     margin-bottom:0.35rem;
   }
   .hero-stat-l {
-    font-size:0.62rem; font-weight:500;
-    letter-spacing:0.14em; text-transform:uppercase;
-    color: rgba(232,221,208,0.35);
+    font-size:0.7rem; font-weight:500;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color: var(--text-dim);
   }
 
   /* spinning badge */
@@ -230,7 +246,7 @@
   .badge-text {
     position:absolute; top:50%; left:50%;
     transform:translate(-50%,-50%);
-    font-size:0.58rem; font-weight:600;
+    font-size:0.7rem; font-weight:600;
     letter-spacing:0.1em; text-transform:uppercase;
     color: var(--amber); text-align:center; line-height:1.5;
   }
@@ -240,7 +256,7 @@
   .wrap { max-width:1100px; margin:0 auto; padding:0 3.5rem; }
 
   .label {
-    font-size:0.65rem; font-weight:500;
+    font-size:0.7rem; font-weight:500;
     letter-spacing:0.2em; text-transform:uppercase;
     color: var(--amber); display:flex; align-items:center; gap:0.8rem;
     margin-bottom:1.5rem;
@@ -287,12 +303,13 @@
     letter-spacing:0.16em; text-transform:uppercase;
     color: var(--amber-dim);
   }
+  .mission-by a { color:var(--amber); text-decoration:none; border-bottom:1px solid var(--amber-dim); transition:border-color 0.2s; }
+  .mission-by a:hover { border-color:var(--amber); }
 
   /* ── ABOUT ── */
   .about { padding:7rem 0; position:relative; overflow:hidden; }
   .about-grid { display:grid; grid-template-columns:1fr 1.3fr; gap:6rem; align-items:start; }
 
-  .about-left {}
   .about-heading {
     font-family:'Playfair Display', serif;
     font-size:clamp(2rem,3.5vw,3rem); font-weight:400;
@@ -302,24 +319,20 @@
 
   .about-tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:2.5rem; }
   .tag {
-    font-size:0.68rem; font-weight:400; padding:0.35rem 0.85rem;
+    font-size:0.72rem; font-weight:400; padding:0.35rem 0.85rem;
     border-radius:999px; border:1px solid rgba(212,135,74,0.25);
-    color:rgba(232,221,208,0.6);
-    transition: border-color 0.2s, color 0.2s;
+    color:rgba(232,221,208,0.72);
   }
-  .tag:hover { border-color:var(--amber); color:var(--amber); }
 
   .about-details { display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); }
   .about-row {
     background:var(--surface); padding:1.2rem 1.5rem;
     display:flex; justify-content:space-between; align-items:center;
-    transition:background 0.2s;
   }
-  .about-row:hover { background:var(--surface2); }
-  .about-row-k { font-size:0.65rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+  .about-row-k { font-size:0.7rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
   .about-row-v { font-size:0.88rem; color:var(--cream); }
 
-  .about-right p { font-size:0.98rem; line-height:1.85; color:rgba(232,221,208,0.6); margin-bottom:1.4rem; }
+  .about-right p { font-size:0.98rem; line-height:1.85; color:rgba(232,221,208,0.68); margin-bottom:1.4rem; }
 
   .about-photo {
     display:block; width:100%; height:360px;
@@ -366,22 +379,17 @@
   }
   .exp-item:hover::before { background:var(--amber); }
 
-  .exp-date { font-size:0.7rem; color:var(--amber-dim); padding-top:0.3rem; line-height:1.5; }
+  .exp-date { font-size:0.75rem; color:var(--amber-dim); padding-top:0.3rem; line-height:1.5; }
   .exp-role {
     font-family:'Playfair Display', serif;
     font-size:1.4rem; font-weight:400;
     color:var(--cream); margin-bottom:0.3rem; line-height:1.2;
   }
   .exp-org { font-size:0.8rem; font-weight:500; color:var(--amber); margin-bottom:0.8rem; }
-  .exp-desc { font-size:0.88rem; line-height:1.75; color:rgba(232,221,208,0.5); max-width:520px; }
+  .exp-desc { font-size:0.88rem; line-height:1.75; color:var(--text-dim); max-width:520px; }
 
   /* ── SKILLS ── */
   .skills { padding:7rem 0; }
-  .skills-grid {
-    margin-top:3rem;
-    display:grid; grid-template-columns:repeat(3,1fr);
-    gap:1px; background:var(--border); border:1px solid var(--border);
-  }
   .skill-card {
     background:var(--bg); padding:2.5rem 2rem;
     transition:background 0.25s;
@@ -420,13 +428,13 @@
     gap:1px; background:var(--border);
   }
 
-  .skill-num { font-size:0.6rem; font-weight:500; letter-spacing:0.18em; color:var(--amber-dim); margin-bottom:1rem; }
+  .skill-num { font-size:0.7rem; font-weight:500; letter-spacing:0.18em; color:var(--amber-dim); margin-bottom:1rem; }
   .skill-name {
     font-family:'Playfair Display', serif;
     font-size:1.25rem; font-weight:400;
     color:var(--cream); margin-bottom:0.7rem;
   }
-  .skill-desc { font-size:0.82rem; line-height:1.7; color:rgba(232,221,208,0.45); }
+  .skill-desc { font-size:0.82rem; line-height:1.7; color:var(--text-dim); }
 
   /* ── EDUCATION ── */
   .education { padding:7rem 0; background:var(--surface); border-top:1px solid var(--border); }
@@ -444,11 +452,11 @@
     color:rgba(212,135,74,0.05); line-height:1;
     pointer-events:none; user-select:none;
   }
-  .edu-year { font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--amber); margin-bottom:1rem; }
+  .edu-year { font-size:0.7rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--amber); margin-bottom:1rem; }
   .edu-school { font-family:'Playfair Display', serif; font-size:1.4rem; font-weight:400; color:var(--cream); margin-bottom:0.4rem; line-height:1.2; }
-  .edu-qual { font-size:0.82rem; line-height:1.55; color:rgba(232,221,208,0.45); margin-bottom:1.5rem; }
+  .edu-qual { font-size:0.82rem; line-height:1.55; color:var(--text-dim); margin-bottom:1.5rem; }
   .edu-badge {
-    display:inline-block; font-size:0.62rem; font-weight:500;
+    display:inline-block; font-size:0.7rem; font-weight:500;
     padding:0.3rem 0.9rem; border-radius:999px;
     background:rgba(212,135,74,0.1); color:var(--amber);
     border:1px solid rgba(212,135,74,0.25);
@@ -492,7 +500,7 @@
     text-decoration:none; font-size:0.78rem; font-weight:400;
     padding:0.9rem 2rem; border-radius:999px;
     border:1px solid rgba(212,135,74,0.35); color:rgba(232,221,208,0.7);
-    transition:all 0.25s;
+    transition:color 0.25s, border-color 0.25s, background-color 0.25s;
   }
   .btn-b:hover { background:rgba(212,135,74,0.08); color:var(--cream); border-color:var(--amber); }
 
@@ -501,7 +509,7 @@
     display:flex; justify-content:space-between; align-items:center;
     border-top:1px solid rgba(212,135,74,0.08);
   }
-  footer p { font-size:0.68rem; color:rgba(255,255,255,0.2); }
+  footer p { font-size:0.72rem; color:var(--muted); }
   .footer-gem { color:var(--amber-dim); font-size:0.8rem; }
 
   /* ── ANIMATIONS ── */
@@ -513,6 +521,14 @@
   .reveal.in { opacity:1; transform:translateY(0); }
   .d1 { transition-delay:0.08s; }
   .d2 { transition-delay:0.16s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    .pulse::after, .badge-ring { animation:none; }
+    .hero-pill, .hero-name, .hero-title, .hero-desc, .hero-cta, .hero-stats { animation:none; }
+    .reveal, .reveal.will-animate { opacity:1; transform:none; transition:none; }
+    .hero-cta:hover svg, .btn-a:hover { transform:none; }
+  }
 
   @media(max-width:900px){
     nav { padding:1rem 1.5rem; }
@@ -538,21 +554,23 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<nav>
+<nav aria-label="Main">
   <div class="nav-name">Lara Pegg</div>
   <div class="nav-links">
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
     <a href="#skills">Skills</a>
     <a class="nav-digest" href="https://digest.hrlar.co.uk" target="_blank" rel="noopener">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12a1 1 0 0 1 1 1v12a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h2a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg>
+      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12a1 1 0 0 1 1 1v12a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h2a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg>
       Read my daily digest
     </a>
     <a class="nav-pill" href="#contact">Say hello</a>
   </div>
 </nav>
 
+<main id="main">
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
@@ -569,17 +587,17 @@
     </p>
     <a class="hero-cta" href="#contact">
       Get in touch
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
   </div>
 
   <div class="hero-right">
-    <div class="hero-grid"></div>
-    <img src="herolara.jpg" alt="Lara Pegg" class="hero-img"/>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <img src="herolara.jpg" alt="Lara Pegg" class="hero-img" width="2400" height="1600" fetchpriority="high"/>
 
-    <div class="hero-badge">
+    <div class="hero-badge" aria-hidden="true">
       <div class="badge-ring">
         <svg viewBox="0 0 110 110" width="100%" height="100%" style="position:absolute;inset:0;">
           <path id="circle-text" d="M 55,55 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" fill="none"/>
@@ -616,18 +634,18 @@
 <section class="mission">
   <div class="wrap">
     <div class="mission-inner reveal">
-      <div class="mission-mark">"</div>
+      <div class="mission-mark" aria-hidden="true">“</div>
       <blockquote class="mission-quote">
         A positive, safe and inclusive environment to allow women to share stories and experiences.
       </blockquote>
-      <div class="mission-by">— Lara Pegg, as quoted in <a href="https://www.womeninfootball.co.uk/news/2024/06/21/inspirational-wif-leadership-course-now-completed-by-600-women/" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;border-bottom:1px solid var(--amber-dim);">Women in Football, June 2024</a></div>
+      <div class="mission-by">— Lara Pegg, as quoted in <a href="https://www.womeninfootball.co.uk/news/2024/06/21/inspirational-wif-leadership-course-now-completed-by-600-women/" target="_blank" rel="noopener">Women in Football, June 2024</a></div>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section class="about" id="about">
-  <div class="about-circle"></div>
+  <div class="about-circle" aria-hidden="true"></div>
   <div class="wrap">
     <div class="about-grid">
       <div class="about-left reveal">
@@ -664,7 +682,7 @@
         </div>
       </div>
       <div class="about-right reveal d1">
-        <img src="eventpotrait.png" alt="Lara Pegg" class="about-photo"/>
+        <img src="eventpotrait.jpg" alt="Lara Pegg speaking at an event" class="about-photo" width="1086" height="1448" loading="lazy" decoding="async"/>
         <p>Senior HR and Governance leader and member of the Senior Leadership Team, operating at both strategic and operational level across regulated, multi-stakeholder environments. Currently leading the end-to-end people, governance and compliance function at Wolves Foundation, providing board-level assurance and driving organisational culture, workforce strategy and safeguarding standards.</p>
         <p>Recognised for strengthening governance, embedding safeguarding cultures and leading progressive, people-first organisational change. A trusted advisor to senior leaders and Trustees on people strategy, risk and compliance — combining fairness with compassion in every interaction.</p>
         <p>People-first leadership that balances organisational needs with individual wellbeing. Credible, calm and solutions-focused, with strong ethical decision-making across safeguarding and governance, and a proactive mindset committed to continuously improving systems, culture and practice.</p>
@@ -676,12 +694,12 @@
 <!-- EXPERIENCE -->
 <section class="experience" id="experience">
   <div class="wrap">
-    <div class="label reveal">Experience</div>
+    <h2 class="label reveal">Experience</h2>
     <div class="exp-list">
       <div class="exp-item reveal">
         <div class="exp-date">Jan 2025<br/>Present</div>
         <div>
-          <div class="exp-role">Head of HR &amp; Governance</div>
+          <h3 class="exp-role">Head of HR &amp; Governance</h3>
           <div class="exp-org">Wolves Foundation</div>
           <p class="exp-desc">Leading HR and Governance across the Foundation — Safer Recruitment, SCR, policy, ER management, and Trustee governance. A strategic senior role where people and compliance meet.</p>
         </div>
@@ -689,7 +707,7 @@
       <div class="exp-item reveal">
         <div class="exp-date">Jan 2024<br/>Jan 2025</div>
         <div>
-          <div class="exp-role">Trustee</div>
+          <h3 class="exp-role">Trustee</h3>
           <div class="exp-org">Ignite Learning Partnership</div>
           <p class="exp-desc">Served as a Trustee for 12 months, contributing to strategic governance and board-level decision making. Provided expert advice on organisational performance, compliance, and long-term strategy — including support during inspection processes. Stepped down due to relocation.</p>
         </div>
@@ -697,7 +715,7 @@
       <div class="exp-item reveal">
         <div class="exp-date">Nov 2022<br/>Jan 2025</div>
         <div>
-          <div class="exp-role">HR Manager</div>
+          <h3 class="exp-role">HR Manager</h3>
           <div class="exp-org">Wolves Foundation</div>
           <p class="exp-desc">Standalone HR Manager and member of the Senior Management team, responsible for the full people and governance strategy across the charity.</p>
         </div>
@@ -705,7 +723,7 @@
       <div class="exp-item reveal">
         <div class="exp-date">Apr 2020<br/>Nov 2022</div>
         <div>
-          <div class="exp-role">HR Consultant</div>
+          <h3 class="exp-role">HR Consultant</h3>
           <div class="exp-org">Services4Schools</div>
           <p class="exp-desc">Full-time consultancy supporting schools across the West Midlands — disciplinary, grievance, capability, restructure, redundancy, and TUPE.</p>
         </div>
@@ -713,7 +731,7 @@
       <div class="exp-item reveal">
         <div class="exp-date">Jul 2019<br/>Apr 2020</div>
         <div>
-          <div class="exp-role">HR Advisor</div>
+          <h3 class="exp-role">HR Advisor</h3>
           <div class="exp-org">Services4Schools</div>
           <p class="exp-desc">Frontline advisory for a portfolio of schools — absence management, policy development, and union consultation including JCNC work.</p>
         </div>
@@ -721,7 +739,7 @@
       <div class="exp-item reveal">
         <div class="exp-date">Aug 2017<br/>Jul 2019</div>
         <div>
-          <div class="exp-role">HR Apprentice → Administrator</div>
+          <h3 class="exp-role">HR Apprentice → Administrator</h3>
           <div class="exp-org">Services4Schools</div>
           <p class="exp-desc">Started as an apprentice and grew into a full HR Administrator — building a solid foundation in personnel management and HR operations.</p>
         </div>
@@ -729,7 +747,7 @@
       <div class="exp-item reveal">
         <div class="exp-date">May 2013<br/>Aug 2017</div>
         <div>
-          <div class="exp-role">Receptionist (various roles)</div>
+          <h3 class="exp-role">Receptionist (various roles)</h3>
           <div class="exp-org">Bert Williams Leisure Centre</div>
           <p class="exp-desc">Progressed from Casual Recreation Assistant to full-time Receptionist. Built the communication and warmth that underpins her people-first approach.</p>
         </div>
@@ -741,29 +759,29 @@
 <!-- SKILLS -->
 <section class="skills" id="skills">
   <div class="wrap">
-    <div class="label reveal">Core Skills</div>
+    <h2 class="label reveal">Core Skills</h2>
     <div class="skills-layout">
       <div class="skills-top">
-        <img src="LARAPOINT2.jpg" alt="Lara Pegg" class="skills-photo-panel reveal"/>
+        <img src="LARAPOINT2.jpg" alt="" class="skills-photo-panel reveal" width="1372" height="2297" loading="lazy" decoding="async"/>
         <div class="skills-top-cards">
           <div class="skill-card reveal">
             <div class="skill-num">01</div>
-            <div class="skill-name">Strategic HR &amp; Governance Leadership</div>
+            <h3 class="skill-name">Strategic HR &amp; Governance Leadership</h3>
             <p class="skill-desc">Lead and own end-to-end HR and governance functions within complex, regulated environments — driving strategic workforce planning aligned to growth, risk and community impact, and acting as a trusted advisor to senior leaders and Trustees.</p>
           </div>
           <div class="skill-card reveal d1">
             <div class="skill-num">02</div>
-            <div class="skill-name">Employee Relations &amp; Workforce Management</div>
+            <h3 class="skill-name">Employee Relations &amp; Workforce Management</h3>
             <p class="skill-desc">Lead complex employee relations, providing clear, balanced and values-led resolution. Oversee safer recruitment processes and direct the full employment lifecycle, ensuring compliance, consistency and high-quality employee experience.</p>
           </div>
           <div class="skill-card reveal">
             <div class="skill-num">03</div>
-            <div class="skill-name">Safeguarding &amp; Compliance</div>
+            <h3 class="skill-name">Safeguarding &amp; Compliance</h3>
             <p class="skill-desc">Set and embed safeguarding culture, policy and practice aligned to statutory and sector standards. Lead audit readiness across PLF, HMRC, safeguarding and governance — owning workforce data integrity and GDPR compliance.</p>
           </div>
           <div class="skill-card reveal d1">
             <div class="skill-num">04</div>
-            <div class="skill-name">People, Culture &amp; EDI</div>
+            <h3 class="skill-name">People, Culture &amp; EDI</h3>
             <p class="skill-desc">Drive inclusive workforce strategy, embedding EDI into recruitment, culture and decision-making. Lead Equality Impact Assessments and deliver wellbeing and engagement strategies that strengthen culture and performance.</p>
           </div>
         </div>
@@ -771,12 +789,12 @@
       <div class="skills-bottom">
         <div class="skill-card reveal">
           <div class="skill-num">05</div>
-          <div class="skill-name">Learning, Development &amp; Change</div>
+          <h3 class="skill-name">Learning, Development &amp; Change</h3>
           <p class="skill-desc">Lead L&amp;D strategy to build leadership capability and empower managers. Drive organisational change including culture transformation, policy modernisation and structural development — and deliver impactful training on safeguarding, governance and professional standards.</p>
         </div>
         <div class="skill-card reveal d1">
           <div class="skill-num">06</div>
-          <div class="skill-name">Governance &amp; Board Support</div>
+          <h3 class="skill-name">Governance &amp; Board Support</h3>
           <p class="skill-desc">Lead governance advice and support to Trustees and Board, strengthening oversight and accountability. Develop and embed governance frameworks, reporting structures and compliance documentation — managing governance risk and alignment to charity and regulatory standards.</p>
         </div>
       </div>
@@ -787,41 +805,41 @@
 <!-- EDUCATION -->
 <section class="education" id="education">
   <div class="wrap">
-    <div class="label reveal">Education</div>
+    <h2 class="label reveal">Education</h2>
     <div class="edu-cards">
       <div class="edu-card reveal" data-letter="C">
         <div class="edu-year">2018 – 2019</div>
-        <div class="edu-school">CIPD Qualifications</div>
+        <h3 class="edu-school">CIPD Qualifications</h3>
         <div class="edu-qual">Level 5 Diploma in Human Resources Management &amp; Services</div>
         <span class="edu-badge">Achieved</span>
       </div>
       <div class="edu-card reveal d1" data-letter="T">
         <div class="edu-year">2019 – 2020</div>
-        <div class="edu-school">Training Qualifications UK</div>
+        <h3 class="edu-school">Training Qualifications UK</h3>
         <div class="edu-qual">HR Consultant / Partner Standard — Human Resources Development</div>
         <span class="edu-badge">Pass</span>
       </div>
       <div class="edu-card reveal" data-letter="N">
         <div class="edu-year">2023</div>
-        <div class="edu-school">NSPCC</div>
+        <h3 class="edu-school">NSPCC</h3>
         <div class="edu-qual">Safer Recruitment</div>
         <span class="edu-badge">Certified</span>
       </div>
       <div class="edu-card reveal d1" data-letter="M">
         <div class="edu-year">CPD</div>
-        <div class="edu-school">Mental Health First Aid</div>
+        <h3 class="edu-school">Mental Health First Aid</h3>
         <div class="edu-qual">Mental Health First Aider qualification</div>
         <span class="edu-badge">Certified</span>
       </div>
       <div class="edu-card reveal" data-letter="A">
         <div class="edu-year">CPD</div>
-        <div class="edu-school">Autism in the Workplace</div>
+        <h3 class="edu-school">Autism in the Workplace</h3>
         <div class="edu-qual">Continuing Professional Development</div>
         <span class="edu-badge">Certified</span>
       </div>
       <div class="edu-card reveal d1" data-letter="S">
         <div class="edu-year">November 2026</div>
-        <div class="edu-school">Level 3 Safeguarding</div>
+        <h3 class="edu-school">Level 3 Safeguarding</h3>
         <div class="edu-qual">Safeguarding Support Officer Apprenticeship</div>
         <span class="edu-badge">Distinction</span>
       </div>
@@ -833,24 +851,25 @@
 <section class="contact" id="contact">
   <div class="wrap">
     <div class="label">Get in touch</div>
-    <h2 class="contact-title">Let's talk<br/><em>people.</em></h2>
-    <p class="contact-sub">Whether it's a chat about HR, governance, or a potential opportunity — Lara would love to hear from you.</p>
+    <h2 class="contact-title">Let’s talk<br/><em>people.</em></h2>
+    <p class="contact-sub">Whether it’s a chat about HR, governance, or a potential opportunity — Lara would love to hear from you.</p>
     <div class="contact-btns">
       <a class="btn-a" href="https://www.linkedin.com/in/larapegg/" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56V14.9c0-1.33-.48-2.24-1.67-2.24-.91 0-1.45.61-1.69 1.2-.09.21-.11.5-.11.8v5.79H9.86s.05-9.39 0-10.36h3.56v1.47c.47-.73 1.31-1.77 3.19-1.77 2.33 0 4.07 1.52 4.07 4.79v5.87zM5.34 8.29c-1.21 0-2-.81-2-1.83 0-1.04.81-1.83 2.04-1.83s1.98.79 2 1.83c0 1.02-.79 1.83-2.04 1.83zm1.78 12.16H3.56V9.58h3.56v10.87z"/></svg>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56V14.9c0-1.33-.48-2.24-1.67-2.24-.91 0-1.45.61-1.69 1.2-.09.21-.11.5-.11.8v5.79H9.86s.05-9.39 0-10.36h3.56v1.47c.47-.73 1.31-1.77 3.19-1.77 2.33 0 4.07 1.52 4.07 4.79v5.87zM5.34 8.29c-1.21 0-2-.81-2-1.83 0-1.04.81-1.83 2.04-1.83s1.98.79 2 1.83c0 1.02-.79 1.83-2.04 1.83zm1.78 12.16H3.56V9.58h3.56v10.87z"/></svg>
         LinkedIn
       </a>
       <a class="btn-b" href="/cdn-cgi/l/email-protection#e18d809380a18298838493828e8d84cf828ecf948a">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Send an email
       </a>
       <a class="btn-b" href="https://digest.hrlar.co.uk" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12a1 1 0 0 1 1 1v12a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h2a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12a1 1 0 0 1 1 1v12a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h2a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg>
         Read my daily digest
       </a>
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <p>© 2026 Lara Pegg</p>
@@ -858,10 +877,19 @@
   <p>Birmingham, England</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
   const reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduceMotion) {
     reveals.forEach(el => el.classList.add('will-animate'));
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => obs.observe(el));
+  }
+</script>
+</body>
+</html>
